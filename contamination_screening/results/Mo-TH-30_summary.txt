@@ -1,0 +1,13 @@
+Sample: Mo-TH-30
+Total contigs: 727
+
+CONTAMINATION:
+  Chloroplast contigs: 99
+  Mitochondrial contigs: 0
+  Bacterial/Vector contigs: 0
+  Total contamination: 99 (13.62%)
+
+CRITERIA:
+  Chloroplast: >90% of contig aligns to chloroplast
+  Mitochondria: >90% of contig aligns to mitochondria
+  Bacteria: >80% of contig aligns to bacteria

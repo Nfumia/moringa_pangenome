@@ -1,0 +1,13 @@
+Sample: Mo-TH-43
+Total contigs: 738
+
+CONTAMINATION:
+  Chloroplast contigs: 84
+  Mitochondrial contigs: 0
+  Bacterial/Vector contigs: 0
+  Total contamination: 84 (11.38%)
+
+CRITERIA:
+  Chloroplast: >90% of contig aligns to chloroplast
+  Mitochondria: >90% of contig aligns to mitochondria
+  Bacteria: >80% of contig aligns to bacteria

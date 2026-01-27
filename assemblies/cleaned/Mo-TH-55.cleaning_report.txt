@@ -1,0 +1,23 @@
+Sample: Mo-TH-55
+Date: Fri Dec  5 12:12:54 PM HST 2025
+
+ORIGINAL ASSEMBLY:
+  File: /home/hawaii-agriculture-research-cent/moringa_pangenome/assemblies/production/Mo-TH-55/Mo-TH-55.primary.fasta
+  Contigs: 908
+  Size: 314.2 Mb
+
+CONTAMINATION DETECTED:
+  Organelles: 91 contigs
+  True contaminants: 0 contigs
+  Total removed:  contigs (0.00%)
+
+CLEANED NUCLEAR ASSEMBLY:
+  File: /home/hawaii-agriculture-research-cent/moringa_pangenome/assemblies/cleaned/Mo-TH-55.cleaned.fasta
+  Contigs: 908
+  Size: 314.2 Mb
+
+ORGANELLE ASSEMBLY:
+  File: /home/hawaii-agriculture-research-cent/moringa_pangenome/assemblies/organelles/Mo-TH-55.organelles.fasta
+  Size: 5.5 Mb
+  Chloroplast contigs: 91
+

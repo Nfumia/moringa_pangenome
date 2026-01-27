@@ -1,0 +1,21 @@
+Coverage Mapping Summary - All Heterozygous Samples
+Date: Thu Jan 22 09:13:34 PM HST 2026
+
+=======================================================================
+
+Sample     | Hap1 Cov   | Hap2 Cov   | High-Cov Ctgs   | Collapsed (Mb) 
+--------------------------------------------------------------------------------
+Mo-TH-55   | -nanx      | -nanx      | 0               | 0              
+Mo-TH-16   | -nanx      | -nanx      | 0               | 0              
+Mo-TH-43   | -nanx      | -nanx      | 0               | 0              
+Mo-TH-6    | -nanx      | -nanx      | 0               | 0              
+Mo-TH-63   | -nanx      | -nanx      | 0               | 0              
+Mo-TW-13   | -nanx      | -nanx      | 0               | 0              
+
+=======================================================================
+INTERPRETATION:
+=======================================================================
+
+High-coverage regions (>1.5x mean) in Hap1 indicate collapsed regions
+  → These sequences have 2x coverage (both haplotypes collapsed together)
+  → Should have been separated into Hap2 during phasing

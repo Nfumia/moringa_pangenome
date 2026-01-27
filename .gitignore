@@ -1,0 +1,186 @@
+# ============================================
+# Moringa Pangenome Project .gitignore
+# ============================================
+
+# Data files (too large for GitHub)
+# -----------------------------------
+*.fasta
+*.fa
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.sam
+*.cram
+
+# BLAST databases and results
+*.nhr
+*.nin
+*.nsq
+*.ndb
+*.not
+*.ntf
+*.nto
+*.blast
+*.xml
+
+# Assembly intermediate files
+*.gfa
+*.gaf
+*.bin
+*.paf
+
+# K-mer databases
+*.meryl/
+*.jf
+*.histo
+
+# Results directories (upload separately to Zenodo)
+# --------------------------------------------------
+raw_data/
+rawdata/
+assemblies/production/*/
+assemblies/scaffolded/*/
+assemblies/phased/*/
+assemblies/cleaned/*/
+haplotype_analysis/*/02_homology/*.blast
+haplotype_analysis/*/03_synteny/*.paf
+haplotype_analysis/*/04_coverage/*.bam
+haplotype_analysis/*/04_coverage/*.txt
+haplotype_analysis/*/05_kmers/*.meryl/
+
+# Keep summary files but not raw data
+!haplotype_analysis/batch_results/**/summary*.txt
+!haplotype_analysis/batch_results/**/*.csv
+
+# Temporary files
+# ---------------
+*.tmp
+*.temp
+*.log
+*.err
+*.out
+*~
+.DS_Store
+._.DS_Store
+
+# Conda/Python
+# ------------
+.snakemake/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.ipynb_checkpoints/
+
+# Editor files
+# ------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# System files
+# ------------
+Thumbs.db
+Desktop.ini
+
+# Logs
+# ----
+logs/*.log
+logs/*.err
+logs/*.out
+*.perf
+
+# QC outputs (large)
+# ------------------
+qc/busco/*/run_*/
+qc/quast/*/
+qc/merqury/*/
+
+# Keep only summaries
+!qc/busco/*/short_summary*.txt
+!qc/quast/*/report.txt
+
+# Backup files
+# ------------
+*.backup
+*.bak
+*_old
+*_backup
+
+# Compressed archives
+# -------------------
+*.tar
+*.tar.gz
+*.zip
+*.7z
+
+# Keep these important files
+# ---------------------------
+!README.md
+!LICENSE
+!environment.yml
+!INSTALL.md
+!.gitignore
+
+# Keep all scripts
+!scripts/**/*.sh
+!scripts/**/*.py
+!analysis_scripts/**/*.sh
+
+# Keep all documentation
+!docs/**/*.md
+
+# Keep summary/result tables
+!results/tables/*.csv
+!results/tables/*.tsv
+!results/tables/*.txt
+
+# Keep figures
+!results/figures/*.png
+!results/figures/*.pdf
+!results/figures/*.svg
+
+
+# Reference genome files (too large for GitHub)
+moringa_reference/*.fa
+moringa_reference/*.fa.*
+moringa_reference/*.fasta
+moringa_reference/*.fasta.*
+
+# Reference genome and indices (too large)
+moringa_reference/
+
+# Large analysis intermediate files
+haplotype_analysis/**/04_coverage/*.bam
+haplotype_analysis/**/04_coverage/*.bam.bai
+haplotype_analysis/**/04_coverage/*.mmi
+haplotype_analysis/**/04_coverage/*_depth.txt
+haplotype_analysis/**/02_homology/*.n*  # BLAST databases
+haplotype_analysis/**/02_homology/makeblastdb*.log
+haplotype_analysis/**/02_homology/makeblastdb*.perf
+haplotype_analysis/**/05_kmers/*.meryl/
+
+# Contamination screening databases
+contamination_screening/references/*.n*  # BLAST databases
+contamination_screening/references/*.fasta
+contamination_screening/test_contig.fasta
+
+# Reference genome
+MoringaV2.genome.fa
+*.genome.fa
+
+# Keep only summary files
+!haplotype_analysis/batch_results/**/*.txt
+!haplotype_analysis/batch_results/**/*.csv
+!contamination_screening/contamination_report.txt

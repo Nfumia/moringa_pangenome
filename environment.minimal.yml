@@ -1,0 +1,17 @@
+name: moringa_pangenome_minimal
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Essential assembly tools only
+  - hifiasm=0.19.8
+  - bwa-mem2=2.2.1
+  - samtools=1.17
+  - yahs=1.2a.2
+  - seqkit=2.3.1
+  - blast=2.14.0
+  - minimap2=2.24
+  - python=3.10
+

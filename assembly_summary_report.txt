@@ -1,0 +1,58 @@
+================================================================================
+                    MORINGA PANGENOME ASSEMBLY SUMMARY
+================================================================================
+Generated: Thu Dec  4 02:54:01 PM HST 2025
+
+========================================
+1. HiFi-Only Assemblies (9 samples)
+========================================
+Sample     | Size(Mb)   | Contigs  | N50(Mb)    | Longest(Mb)  | Het_Level
+--------------------------------------------------------------------------------
+Mo-TH-30   | 310.0      | 727      | 14.06      | 19.86        | -1      
+Mo-TH-55   | 314.2      | 908      | 10.06      | 17.39        | 24      
+Mo-TH-16   | 313.6      | 829      | 15.31      | 17.55        | 32      
+Mo-TH-43   | 313.0      | 738      | 13.71      | 17.50        | 22      
+Mo-TH-6    | 303.6      | 771      | 14.17      | 17.50        | 12      
+Mo-TH-63   | 306.5      | 642      | 15.05      | 30.24        | 7       
+Mo-TH-66   | 310.8      | 992      | 8.08       | 17.53        | -1      
+Mo-TW-13   | 290.9      | 563      | 15.69      | 27.06        | 29      
+Mo-US-5    | 312.3      | 840      | 8.90       | 17.70        | -1      
+
+========================================
+2. Hi-C Scaffolded Assemblies (3 homozygous)
+========================================
+Sample     | Size(Mb)     | Scaffolds  | N50(Mb)      | Longest(Mb)    | Improvement 
+--------------------------------------------------------------------------------
+Mo-TH-30   | 310.1        | 569        | 16.97        | 29.30          | 1.21x N50   
+Mo-TH-66   | 310.8        | 686        | 15.20        | 41.68          | 1.88x N50   
+Mo-US-5    | 312.3        | 689        | 17.37        | 42.30          | 1.95x N50   
+
+========================================
+3. Haplotype-Phased Assemblies (6 heterozygous)
+========================================
+Sample     | Hap1(Mb)   | Hap2(Mb)   | Total(Mb)  | Ratio        | Status    
+--------------------------------------------------------------------------------
+Mo-TH-55   | 308.5      | 260.6      | 569.1      | 1.81x        | ✓ Complete
+Mo-TH-16   | 286.6      | 286.8      | 573.4      | 1.83x        | ✓ Complete
+Mo-TH-43   | 298.3      | 267.2      | 565.5      | 1.81x        | ✓ Complete
+Mo-TH-6    | 266.3      | 267.3      | 533.6      | 1.76x        | ✓ Complete
+Mo-TH-63   | 292.5      | 260.2      | 552.7      | 1.80x        | ✓ Complete
+Mo-TW-13   | 287.1      | 241.9      | 529.0      | 1.82x        | ✓ Complete
+
+========================================
+SUMMARY STATISTICS
+========================================
+Total assemblies when complete: 15
+  - HiFi-only: 9 assemblies
+  - Scaffolded (homozygous): 3 assemblies
+  - Phased (heterozygous): 6 samples × 2 haplotypes = 12 assemblies
+
+Heterozygosity distribution:
+  - Homozygous (peak_het = -1): 3 samples (33%)
+  - Heterozygous (peak_het > 0): 6 samples (67%)
+
+Size range:
+  - HiFi assemblies: 290-314 Mb (N50: 8.9-15.3 Mb)
+  - Scaffolded: 310-312 Mb (N50: 16.5-21.6 Mb, longest: 29-42 Mb)
+  - Phased total: 529-573 Mb per sample (diploid, 1.76-1.83x)
+================================================================================

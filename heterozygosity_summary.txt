@@ -1,0 +1,10 @@
+Sample	peak_hom	peak_het	Status	Recommendation
+Mo-TH-30	57	-1	Homozygous	Hi-C scaffolding only (YaHS)
+Mo-TH-55	43	24	Heterozygous	Hi-C integrated phasing (hifiasm --h1 --h2)
+Mo-TH-16	60	32	Heterozygous	Hi-C integrated phasing (hifiasm --h1 --h2)
+Mo-TH-43	43	22	Heterozygous	Hi-C integrated phasing (hifiasm --h1 --h2)
+Mo-TH-6	40	12	Heterozygous	Hi-C integrated phasing (hifiasm --h1 --h2)
+Mo-TH-63	53	7	Heterozygous	Hi-C integrated phasing (hifiasm --h1 --h2)
+Mo-TH-66	43	-1	Homozygous	Hi-C scaffolding only (YaHS)
+Mo-TW-13	57	29	Heterozygous	Hi-C integrated phasing (hifiasm --h1 --h2)
+Mo-US-5	43	-1	Homozygous	Hi-C scaffolding only (YaHS)

@@ -1,0 +1,53 @@
+Sample Coverage Calculations
+Date: Mon Dec 29 09:21:48 AM HST 2025
+
+Sample     | Total Bases     | Genome Size  | Coverage  
+----------------------------------------------------------------
+Processing: Mo-TH-30
+  Calculating bases from: raw_data/hifi/Mo-TH-30_hifi.fastq.gz
+Mo-TH-30   | 16.39 Gb        | 310.0 Mb     | 52.9x     
+
+Processing: Mo-TH-55
+  Calculating bases from: raw_data/hifi/Mo-TH-55_hifi.fastq.gz
+Mo-TH-55   | 13.49 Gb        | 314.2 Mb     | 42.9x     
+
+Processing: Mo-TH-16
+  Calculating bases from: raw_data/hifi/Mo-TH-16_hifi.fastq.gz
+Mo-TH-16   | 17.63 Gb        | 313.6 Mb     | 56.2x     
+
+Processing: Mo-TH-43
+  Calculating bases from: raw_data/hifi/Mo-TH-43_hifi.fastq.gz
+Mo-TH-43   | 12.86 Gb        | 313.0 Mb     | 41.1x     
+
+Processing: Mo-TH-6
+  Calculating bases from: raw_data/hifi/Mo-TH-6_hifi.fastq.gz
+Mo-TH-6    | 12.40 Gb        | 303.6 Mb     | 40.8x     
+
+Processing: Mo-TH-63
+  Calculating bases from: raw_data/hifi/Mo-TH-63_hifi.fastq.gz
+Mo-TH-63   | 15.41 Gb        | 306.5 Mb     | 50.3x     
+
+Processing: Mo-TH-66
+  Calculating bases from: raw_data/hifi/Mo-TH-66_hifi.fastq.gz
+Mo-TH-66   | 13.28 Gb        | 310.8 Mb     | 42.7x     
+
+Processing: Mo-TW-13
+  Calculating bases from: raw_data/hifi/Mo-TW-13_hifi.fastq.gz
+Mo-TW-13   | 16.40 Gb        | 290.9 Mb     | 56.4x     
+
+Processing: Mo-US-5
+  Calculating bases from: raw_data/hifi/Mo-US-5_hifi.fastq.gz
+Mo-US-5    | 12.88 Gb        | 312.3 Mb     | 41.2x     
+
+================================================================
+
+Coverage Interpretation:
+  20-30x:  Minimum for good assembly
+  30-40x:  Good coverage (typical target)
+  40-60x:  Excellent coverage
+  >60x:    Very high coverage (diminishing returns)
+
+Mean Coverage Summary:
+  Mean across all samples: 47.2x
+
+================================================================

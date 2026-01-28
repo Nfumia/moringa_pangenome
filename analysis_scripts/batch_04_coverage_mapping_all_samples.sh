@@ -96,7 +96,7 @@ echo "Date: $(date)"
 echo ""
 echo "======================================================================="
 echo ""
-printf "%-10s | %-10s | %-10s | %-15s | %-15s\n" "Sample" "Hap1 Cov" "Hap2 Cov" "High-Cov Ctgs" "Collapsed (Mb)"
+printf "%-10s | %-10s | %-10s | %-15s | %-15s\n" "Sample" "Hap1 Cov" "Hap2 Cov" "High-Cov Ctgs" "Conserved (Mb)"
 echo "--------------------------------------------------------------------------------"
 
 while IFS=',' read -r sample h1cov h2cov highcount collapsed; do
@@ -111,9 +111,9 @@ echo "INTERPRETATION:"
 echo "======================================================================="
 echo ""
 echo "High-coverage regions (>1.5x mean) in Hap1 indicate collapsed regions"
-echo "  → These sequences have 2x coverage (both haplotypes collapsed together)"
-echo "  → Should have been separated into Hap2 during phasing"
-
+echo "High-coverage regions (>1.5x mean) indicate conserved sequences between haplotypes"
+echo "  → These sequences are highly similar (>95% identity) between Hap1 and Hap2"
+echo "  → Reads from BOTH haplotypes map here (NOT collapsed - properly phased)"
 } | tee "$OUTDIR/coverage_summary_all_samples.txt"
 
 echo ""

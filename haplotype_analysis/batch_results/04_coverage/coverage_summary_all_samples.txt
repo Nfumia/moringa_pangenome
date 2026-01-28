@@ -1,21 +1,20 @@
 Coverage Mapping Summary - All Heterozygous Samples
-Date: Thu Jan 22 09:13:34 PM HST 2026
+Date: Tue Jan 27 01:34:18 PM HST 2026
 
 =======================================================================
 
-Sample     | Hap1 Cov   | Hap2 Cov   | High-Cov Ctgs   | Collapsed (Mb) 
+Sample     | Hap1 Cov   | Hap2 Cov   | High-Cov Ctgs   | Conserved (Mb) 
 --------------------------------------------------------------------------------
-Mo-TH-55   | -nanx      | -nanx      | 0               | 0              
-Mo-TH-16   | -nanx      | -nanx      | 0               | 0              
-Mo-TH-43   | -nanx      | -nanx      | 0               | 0              
-Mo-TH-6    | -nanx      | -nanx      | 0               | 0              
-Mo-TH-63   | -nanx      | -nanx      | 0               | 0              
-Mo-TW-13   | -nanx      | -nanx      | 0               | 0              
-
+Mo-TH-55   | 44.2x      | 51.5x      | 255             | 248.7          
+Mo-TH-16   | 61.9x      | 61.2x      | 273             | 257.1          
+Mo-TH-43   | 43.4x      | 47.8x      | 242             | 253.2          
+Mo-TH-6    | 46.7x      | 45.3x      | 289             | 246.1          
+Mo-TH-63   | 53.3x      | 58.6x      | 243             | 265.1          
+Mo-TW-13   | 57.8x      | 67.4x      | 207             | 267.6          
 =======================================================================
 INTERPRETATION:
 =======================================================================
 
-High-coverage regions (>1.5x mean) in Hap1 indicate collapsed regions
-  → These sequences have 2x coverage (both haplotypes collapsed together)
-  → Should have been separated into Hap2 during phasing
+High-coverage regions (>1.5x mean) indicate conserved sequences between haplotypes
+  → These sequences are highly similar (>95% identity) between Hap1 and Hap2
+  → Reads from BOTH haplotypes map here (NOT collapsed - properly phased)

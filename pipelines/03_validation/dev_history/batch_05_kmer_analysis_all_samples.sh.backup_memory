@@ -1,0 +1,131 @@
+#!/bin/bash
+
+################################################################################
+# K-mer Analysis - ALL HETEROZYGOUS SAMPLES
+# Purpose: Definitive proof of collapsed vs structural variants
+# Runtime: 12-24 hours total (2-4 hours per sample)
+# Requires: meryl
+################################################################################
+
+echo "======================================================================="
+echo "K-MER ANALYSIS - ALL HETEROZYGOUS SAMPLES"
+echo "======================================================================="
+echo "Date: $(date)"
+echo ""
+echo "WARNING: This will take 12-24 hours to complete!"
+echo "Consider running in a screen session or overnight"
+echo ""
+
+# Check for meryl
+if ! command -v meryl &> /dev/null; then
+    echo "ERROR: meryl not found. Install with:"
+    echo "  conda install -c bioconda merqury"
+    exit 1
+fi
+
+# All heterozygous samples
+SAMPLES=(Mo-TH-55 Mo-TH-16 Mo-TH-43 Mo-TH-6 Mo-TH-63 Mo-TW-13)
+
+OUTDIR="../haplotype_analysis/batch_results/05_kmers"
+mkdir -p "$OUTDIR"
+
+# Results file
+echo "Sample,Hap1_Unique,Hap2_Unique,Shared,Collapsed_Est_Mb,SV_Est_Mb" > "$OUTDIR/kmer_results.csv"
+
+for SAMPLE in "${SAMPLES[@]}"; do
+    echo ""
+    echo "======================================================================="
+    echo "Processing: $SAMPLE (this will take 2-4 hours)"
+    echo "======================================================================="
+    
+    SAMPLE_DIR="../haplotype_analysis/${SAMPLE}/05_kmers"
+    mkdir -p "$SAMPLE_DIR"
+    
+    HAP1="../assemblies/phased/${SAMPLE}/${SAMPLE}.hap1.fasta"
+    HAP2="../assemblies/phased/${SAMPLE}/${SAMPLE}.hap2.fasta"
+    READS="../raw_data/hifi/${SAMPLE}_hifi.fastq.gz"
+    
+    if [ ! -f "$HAP1" ] || [ ! -f "$HAP2" ] || [ ! -f "$READS" ]; then
+        echo "ERROR: Files not found for $SAMPLE"
+        continue
+    fi
+    
+    echo "Step 1/7: Building k-mer DB from reads..."
+    meryl count k=21 output "$SAMPLE_DIR/reads.meryl" "$READS"
+    
+    echo "Step 2/7: Counting k-mers in Hap1..."
+    meryl count k=21 output "$SAMPLE_DIR/hap1.meryl" "$HAP1"
+    
+    echo "Step 3/7: Counting k-mers in Hap2..."
+    meryl count k=21 output "$SAMPLE_DIR/hap2.meryl" "$HAP2"
+    
+    echo "Step 4/7: Finding Hap1 unique k-mers..."
+    meryl difference output "$SAMPLE_DIR/hap1_only.meryl" "$SAMPLE_DIR/hap1.meryl" "$SAMPLE_DIR/hap2.meryl"
+    
+    echo "Step 5/7: Finding Hap2 unique k-mers..."
+    meryl difference output "$SAMPLE_DIR/hap2_only.meryl" "$SAMPLE_DIR/hap2.meryl" "$SAMPLE_DIR/hap1.meryl"
+    
+    echo "Step 6/7: Finding shared k-mers..."
+    meryl intersect output "$SAMPLE_DIR/shared.meryl" "$SAMPLE_DIR/hap1.meryl" "$SAMPLE_DIR/hap2.meryl"
+    
+    echo "Step 7/7: Calculating statistics..."
+    
+    # Get counts
+    H1_UNIQUE=$(meryl statistics "$SAMPLE_DIR/hap1_only.meryl" 2>/dev/null | grep "Distinct" | awk '{print $3}')
+    H2_UNIQUE=$(meryl statistics "$SAMPLE_DIR/hap2_only.meryl" 2>/dev/null | grep "Distinct" | awk '{print $3}')
+    SHARED=$(meryl statistics "$SAMPLE_DIR/shared.meryl" 2>/dev/null | grep "Distinct" | awk '{print $3}')
+    
+    # Get sizes
+    HAP1_SIZE=$(seqkit stats "$HAP1" 2>/dev/null | tail -1 | awk '{gsub(/,/,"",$5); print $5}')
+    HAP2_SIZE=$(seqkit stats "$HAP2" 2>/dev/null | tail -1 | awk '{gsub(/,/,"",$5); print $5}')
+    SIZE_DIFF=$(awk -v h1="$HAP1_SIZE" -v h2="$HAP2_SIZE" 'BEGIN {printf "%.1f", (h1-h2)/1000000}')
+    
+    # Estimate collapsed vs SV
+    HAP1_TOTAL=$(meryl statistics "$SAMPLE_DIR/hap1.meryl" 2>/dev/null | grep "Distinct" | awk '{print $3}')
+    COLLAPSED_EST=$(awk -v s="$SHARED" -v h1="$HAP1_TOTAL" -v diff="$SIZE_DIFF" \
+        'BEGIN {printf "%.1f", (s/h1)*diff}')
+    SV_EST=$(awk -v diff="$SIZE_DIFF" -v collapsed="$COLLAPSED_EST" \
+        'BEGIN {printf "%.1f", diff-collapsed}')
+    
+    echo "$SAMPLE,$H1_UNIQUE,$H2_UNIQUE,$SHARED,$COLLAPSED_EST,$SV_EST" >> "$OUTDIR/kmer_results.csv"
+    
+    echo "  Collapsed estimate: ${COLLAPSED_EST} Mb"
+    echo "  SV estimate: ${SV_EST} Mb"
+done
+
+echo ""
+echo "======================================================================="
+echo "GENERATING SUMMARY"
+echo "======================================================================="
+
+{
+echo "K-mer Analysis Summary - All Heterozygous Samples"
+echo "Date: $(date)"
+echo ""
+echo "======================================================================="
+echo ""
+printf "%-10s | %-12s | %-12s | %-12s | %-12s | %-10s\n" "Sample" "Hap1 Unique" "Hap2 Unique" "Shared" "Collapsed" "SV (Mb)"
+echo "---------------------------------------------------------------------------------------------"
+
+while IFS=',' read -r sample h1u h2u shared collapsed sv; do
+    if [ "$sample" != "Sample" ]; then
+        printf "%-10s | %-12s | %-12s | %-12s | %-12s | %-10s\n" "$sample" "$h1u" "$h2u" "$shared" "${collapsed} Mb" "$sv"
+    fi
+done < "$OUTDIR/kmer_results.csv"
+
+echo ""
+echo "======================================================================="
+echo "INTERPRETATION:"
+echo "======================================================================="
+echo ""
+echo "K-mer analysis provides definitive evidence:"
+echo "  Collapsed (Mb) = Technical limitation (should be in both haplotypes)"
+echo "  SV (Mb) = Biological variation (true structural differences)"
+
+} | tee "$OUTDIR/kmer_summary_all_samples.txt"
+
+echo ""
+echo "======================================================================="
+echo "All samples complete!"
+echo "Summary: $OUTDIR/kmer_summary_all_samples.txt"
+echo "======================================================================="

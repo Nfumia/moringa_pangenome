@@ -1,0 +1,99 @@
+#!/bin/bash
+
+################################################################################
+# Synteny Analysis - ALL HETEROZYGOUS SAMPLES
+# Purpose: Whole-genome alignment for all samples
+# Runtime: 3 hours total (30 min per sample)
+################################################################################
+
+echo "======================================================================="
+echo "SYNTENY ANALYSIS - ALL HETEROZYGOUS SAMPLES"
+echo "======================================================================="
+echo "Date: $(date)"
+echo ""
+
+# All heterozygous samples
+SAMPLES=(Mo-TH-55 Mo-TH-16 Mo-TH-43 Mo-TH-6 Mo-TH-63 Mo-TW-13)
+
+OUTDIR="../haplotype_analysis/batch_results/03_synteny"
+mkdir -p "$OUTDIR"
+
+# Results file
+echo "Sample,Hap1_Size_Mb,Hap2_Size_Mb,Aligned_Mb,Alignment_Pct" > "$OUTDIR/synteny_results.csv"
+
+for SAMPLE in "${SAMPLES[@]}"; do
+    echo ""
+    echo "======================================================================="
+    echo "Processing: $SAMPLE"
+    echo "======================================================================="
+    
+    SAMPLE_DIR="../haplotype_analysis/${SAMPLE}/03_synteny"
+    mkdir -p "$SAMPLE_DIR"
+    
+    HAP1="../assemblies/phased/${SAMPLE}/${SAMPLE}.hap1.fasta"
+    HAP2="../assemblies/phased/${SAMPLE}/${SAMPLE}.hap2.fasta"
+    
+    if [ ! -f "$HAP1" ] || [ ! -f "$HAP2" ]; then
+        echo "ERROR: Files not found for $SAMPLE"
+        continue
+    fi
+    
+    echo "Aligning Hap1 to Hap2..."
+    minimap2 -x asm5 -t 24 "$HAP2" "$HAP1" > "$SAMPLE_DIR/hap1_vs_hap2.paf"
+    
+    # Calculate statistics
+    ALIGNED=$(awk '{contig=$1; qend=$4; if(qend>max[contig]) max[contig]=qend} END {sum=0; for(c in max) sum+=max[c]; printf "%.1f", sum/1000000}' "$SAMPLE_DIR/hap1_vs_hap2.paf")
+    HAP1_SIZE=$(seqkit stats "$HAP1" 2>/dev/null | tail -1 | awk '{gsub(/,/,"",$5); printf "%.1f", $5/1000000}')
+    HAP2_SIZE=$(seqkit stats "$HAP2" 2>/dev/null | tail -1 | awk '{gsub(/,/,"",$5); printf "%.1f", $5/1000000}')
+    PCT=$(awk -v a="$ALIGNED" -v h="$HAP1_SIZE" 'BEGIN {printf "%.1f", (a/h)*100}')
+    
+    echo "$SAMPLE,$HAP1_SIZE,$HAP2_SIZE,$ALIGNED,$PCT" >> "$OUTDIR/synteny_results.csv"
+    
+    echo "  Alignment: ${PCT}% (${ALIGNED} Mb / ${HAP1_SIZE} Mb)"
+done
+
+echo ""
+echo "======================================================================="
+echo "GENERATING SUMMARY"
+echo "======================================================================="
+
+{
+echo "Synteny Analysis Summary - All Heterozygous Samples"
+echo "Date: $(date)"
+echo ""
+echo "======================================================================="
+echo ""
+printf "%-10s | %-8s | %-8s | %-10s | %-12s | %-15s\n" "Sample" "Hap1(Mb)" "Hap2(Mb)" "Aligned(Mb)" "Alignment%" "Interpretation"
+echo "---------------------------------------------------------------------------------------------"
+
+while IFS=',' read -r sample h1 h2 aligned pct; do
+    if [ "$pct" != "Alignment_Pct" ]; then
+        if (( $(echo "$pct > 90" | bc -l) )); then
+            INTERP="Excellent phasing"
+        elif (( $(echo "$pct > 80" | bc -l) )); then
+            INTERP="Good phasing"
+        else
+            INTERP="Possible collapsed"
+        fi
+        printf "%-10s | %-8s | %-8s | %-10s | %-12s | %-15s\n" "$sample" "$h1" "$h2" "$aligned" "${pct}%" "$INTERP"
+    fi
+done < "$OUTDIR/synteny_results.csv"
+
+echo ""
+echo "======================================================================="
+echo "INTERPRETATION GUIDE:"
+echo "======================================================================="
+echo ""
+echo ">90% aligned  = High synteny → Excellent phasing, minimal/no collapsed regions"
+echo "80-90% aligned = Good synteny → Good phasing with some structural variants"
+echo "<80% aligned  = Lower synteny → May indicate collapsed regions or highly divergent haplotypes"
+echo "======================================================================="
+echo "All samples complete!"
+echo "Summary: $OUTDIR/synteny_summary_all_samples.txt"
+echo "======================================================================="
+} | tee "$OUTDIR/synteny_summary_all_samples.txt"
+
+echo ""
+echo "=======================================================================" 
+echo "Summary: $OUTDIR/synteny_summary_all_samples.txt"
+echo "=======================================================================" 

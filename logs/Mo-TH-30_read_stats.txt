@@ -1,3 +1,0 @@
-Mean length: 17424.1
-Min length: 1113
-Max length: 43205

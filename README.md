@@ -3,7 +3,7 @@
 ## Project Overview
 De novo genome assembly and pangenome construction for 9 Moringa oleifera samples using PacBio HiFi and Hi-C sequencing data.
 
-**Project Status:** Haplotype validation in progress (January 2026)
+**Project Status:** Comprehensive QC in progress (February 2026)
 
 ## Samples
 - **Total samples:** 9
@@ -39,6 +39,25 @@ De novo genome assembly and pangenome construction for 9 Moringa oleifera sample
 | Mo-TW-13 | 287.1 | 241.9 | 529.0 | 1.82x | 29 |
 
 **Quality:** All ratios 1.76-1.83x indicate successful haplotype resolution
+---
+
+## Repository Structure
+
+```
+moringa_pangenome/
+├── pipelines/                      # All analysis pipelines
+│   ├── 01_assembly/                # BAM→FASTQ, HiFi assembly, scaffolding, phasing
+│   ├── 02_contamination/           # BLAST screening and cleaning
+│   ├── 03_validation/              # Haplotype validation (5 methods)
+│   ├── 04_qc/                      # Comprehensive QC (BUSCO, Merqury)
+│   ├── 05_annotation/              # Genome annotation (future)
+│   ├── 06_pangenome/               # Pan-genome construction (future)
+│   └── utils/                      # Utility scripts
+├── assemblies/                     # Assembly files (not in git)
+├── results/                        # Analysis results (not in git)
+├── raw_data/                       # Sequencing reads (not in git)
+└── docs/                           # Documentation
+```
 
 ---
 
@@ -143,6 +162,17 @@ De novo genome assembly and pangenome construction for 9 Moringa oleifera sample
 - Biological interpretation: Evidence of outcrossing between divergent parents
 
 **Documentation:** See `haplotype_analysis/batch_results/` for complete results and `HAPLOTYPE_VALIDATION_FINAL.md` for comprehensive report and `analysis_scripts/haplotype_analysis/` for complete workflows.
+---
+
+### Phase 4c: Comprehensive QC (IN PROGRESS - February 2026)
+
+| Step | Status | Tool |
+|------|--------|------|
+| Assembly Statistics | ✅ Complete | seqkit |
+| Q30 Scores | ✅ Complete | seqkit |
+| Coverage Analysis | ✅ Complete | mosdepth (41-67x mean) |
+| BUSCO | 🔄 Running | BUSCO 5.7.1 (eudicots_odb10) |
+| Merqury | ⏳ Pending | Merqury |
 
 ---
 
@@ -335,7 +365,7 @@ moringa_pangenome/
 - **December 3-4, 2025:** Hi-C scaffolding (3 homozygous samples)
 - **December 4, 2025:** Haplotype phasing (6 heterozygous samples)
 - **December 5, 2025:** Contamination screening
-- **January 20-27, 2026:** ✅ Haplotype validation complete (5/5 methods)
+- **January 20-27, 2026:** Haplotype validation complete (5/5 methods)
   - Gap analysis: 100% gap-free
   - Homology analysis: 0 collapsed regions
   - Synteny analysis: 100% alignment
@@ -429,6 +459,6 @@ conda activate moringa_pangenome
 
 ---
 
-**Last Updated:** January 27, 2026  
-**Current Phase:** Haplotype Validation ✅ COMPLETE - Ready for Pangenome  
-**Next Milestone:** Pangenome construction with 15 validated assemblies
+**Last Updated:** February 5, 2026
+**Current Phase:** Comprehensive QC (BUSCO running)
+**Next Milestone:** Complete QC → Genome Annotation → Pangenome

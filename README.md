@@ -164,15 +164,25 @@ moringa_pangenome/
 **Documentation:** See `haplotype_analysis/batch_results/` for complete results and `HAPLOTYPE_VALIDATION_FINAL.md` for comprehensive report and `analysis_scripts/haplotype_analysis/` for complete workflows.
 ---
 
-### Phase 4c: Comprehensive QC (IN PROGRESS - February 2026)
+### Phase 4c: Comprehensive QC (COMPLETE - February 2026)
 
-| Step | Status | Tool |
-|------|--------|------|
-| Assembly Statistics | ✅ Complete | seqkit |
-| Q30 Scores | ✅ Complete | seqkit |
-| Coverage Analysis | ✅ Complete | mosdepth (41-67x mean) |
-| BUSCO | 🔄 Running | BUSCO 5.7.1 (eudicots_odb10) |
-| Merqury | ⏳ Pending | Merqury |
+| Step | Status | Tool | Result |
+|------|--------|------|--------|
+| Assembly Statistics | Complete | seqkit | 15 assemblies |
+| Q30 Scores | Complete | seqkit | 9 samples |
+| Coverage Analysis | Complete | mosdepth | 41-67x mean |
+| BUSCO | Complete | BUSCO 5.7.1 | 93.7-98.3% complete |
+| Merqury | Complete | Merqury | QV 57-62 |
+
+**BUSCO Results (eudicots_odb10):**
+- All 15 assemblies: 93.7-98.3% complete
+- Low duplication: 0.4-0.8%
+- Excellent haplotype separation confirmed
+
+**Merqury Results:**
+- Diploid samples: QV 59-62, 99.4-99.5% completeness
+- Haploid samples: QV 57-58, 95-97% completeness
+- All assemblies are publication-quality
 
 ---
 
@@ -441,7 +451,7 @@ conda activate moringa_pangenome
 **Institution:** Hawaii Agriculture Research Center  
 **Date Started:** November 2025  
 
-**Corresponding Author:** [Your email]
+**Corresponding Author:** nfumia@harc-hspa.com
 
 ---
 
@@ -459,6 +469,6 @@ conda activate moringa_pangenome
 
 ---
 
-**Last Updated:** February 5, 2026
-**Current Phase:** Comprehensive QC (BUSCO running)
-**Next Milestone:** Complete QC → Genome Annotation → Pangenome
+**Last Updated:** February 7, 2026
+**Current Phase:** Comprehensive QC
+**Next Milestone:** Genome Annotation → Pangenome Construction
